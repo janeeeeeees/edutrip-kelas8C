@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Favorite Character - Stitch</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #41a7eb; /* Purple/blue to match Stitch */
+            --secondary: #00c8ff; /* Bright blue */
+            --text: #2b2d42;
+            --bg: #f8f9fa;
+            --card: #ffffff;
+            --shadow: rgba(0, 0, 0, 0.1);
+        }
+
+        .dark-mode {
+            --primary: #1e2d89; /* Stitch pink */
+            --secondary: #00c8ff;
+            --text: #f8f9fa;
+            --bg: #121212;
+            --card: #1e1e1e;
+            --shadow: rgba(0, 0, 0, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 4rem 0 6rem;
+            text-align: center;
+            clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
+            margin-bottom: 3rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('download (7).jpg');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.15;
+            z-index: 1;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 5%;
+            background-color: var(--card);
+            box-shadow: 0 2px 10px var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 500;
+            position: relative;
+            padding: 0.5rem 0;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: width 0.3s;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .theme-toggle {
+            background: none;
+            border: none;
+            color: var(--text);
+            font-size: 1.2rem;
+            cursor: pointer;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .character-hero {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 3rem;
+            margin-bottom: 4rem;
+            align-items: center;
+        }
+
+        .character-image {
+            flex: 1;
+            min-width: 300px;
+            position: relative;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px var(--shadow);
+            transform: translateY(0);
+            transition: transform 0.3s;
+        }
+
+        .character-image:hover {
+            transform: translateY(-10px);
+        }
+
+        .character-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .character-info {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-align: center;
+        }
+
+        h2 {
+            font-size: 2rem;
+            margin: 2rem 0 1rem;
+            color: var(--primary);
+            position: relative;
+            display: inline-block;
+        }
+
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            border-radius: 3px;
+        }
+
+        .character-quote {
+            font-style: italic;
+            font-size: 1.3rem;
+            margin: 2rem 0;
+            padding: 1.5rem;
+            background-color: rgba(106, 76, 255, 0.1);
+            border-left: 4px solid var(--primary);
+            border-radius: 0 8px 8px 0;
+            position: relative;
+        }
+
+        .character-quote::before {
+            content: '"';
+            font-size: 4rem;
+            position: absolute;
+            left: 10px;
+            top: -10px;
+            color: rgba(106, 76, 255, 0.2);
+        }
+
+        .character-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin: 3rem 0;
+        }
+
+        .stat-card {
+            background-color: var(--card);
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: 0 5px 15px var(--shadow);
+            text-align: center;
+            transition: transform 0.3s;
+            border-top: 3px solid var(--primary);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-card h3 {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-card p {
+            font-size: 1.1rem;
+        }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 3rem 0;
+        }
+
+        .gallery-item {
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px var(--shadow);
+            position: relative;
+            cursor: pointer;
+            transition: transform 0.3s;
+            aspect-ratio: 1/1;
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.05);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .gallery-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(106, 76, 255, 0.8);
+            color: white;
+            padding: 0.8rem;
+            transform: translateY(100%);
+            transition: transform 0.3s;
+        }
+
+        .gallery-item:hover .gallery-caption {
+            transform: translateY(0);
+        }
+
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            margin: 3rem 0;
+            border-radius: 15px;
+            box-shadow: 0 15px 30px var(--shadow);
+            border: 3px solid var(--primary);
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .reasons-list {
+            counter-reset: reason-counter;
+            margin: 2rem 0;
+        }
+
+        .reason-item {
+            position: relative;
+            padding-left: 3.5rem;
+            margin-bottom: 2rem;
+            counter-increment: reason-counter;
+        }
+
+        .reason-item::before {
+            content: counter(reason-counter);
+            position: absolute;
+            left: 0;
+            top: 0;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: white;
+            width: 2.5rem;
+            height: 2.5rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        footer {
+            text-align: center;
+            padding: 3rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            margin-top: 3rem;
+        }
+
+        /* Animations */
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate {
+            animation: fadeIn 0.8s ease-out forwards;
+        }
+
+        .delay-1 { animation-delay: 0.2s; }
+        .delay-2 { animation-delay: 0.4s; }
+        .delay-3 { animation-delay: 0.6s; }
+        .delay-4 { animation-delay: 0.8s; }
+
+        .floating {
+            animation: float 3s ease-in-out infinite;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-links">
+            <a href="index.html"><i class="fas fa-user"></i> My Profile</a>
+            <a href="karakter.html"><i class="fas fa-heart"></i> Favorite Character</a>
+        </div>
+        <button class="theme-toggle" id="themeToggle">
+            <i class="fas fa-moon"></i>
+        </button>
+    </nav>
+
+    <header>
+        <div class="header-bg"></div>
+        <div class="header-content animate">
+            <div class="container">
+                <h1>Stitch</h1>
+                <p>Experiment 626</p>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <section class="character-hero">
+            <div class="character-image animate delay-1 floating">
+                <img src="92f446c9-2270-4730-8c92-cbc73197a346.jpg" alt="Stitch">
+            </div>
+            
+            <div class="character-info animate delay-2">
+                <h2>About Stitch</h2>
+                <p>Stitch (also known as Experiment 626) is the fictional protagonist of Disney's Lilo & Stitch franchise. Created by Chris Sanders, this genetically engineered, blue koala-like alien creature possesses great strength and intelligence, along with a mischievous streak.</p>
+                
+                <div class="character-quote">
+                    "Ohana means family. Family means nobody gets left behind or forgotten."
+                </div>
+                
+                <p>Originally designed to cause chaos across the galaxy, Stitch escapes and crash-lands on Earth where he meets Lilo, a lonely Hawaiian girl who adopts him as her "dog." Through their friendship, Stitch learns about love, family, and the true meaning of "ohana."</p>
+            </div>
+        </section>
+
+        <div class="character-stats">
+            <div class="stat-card animate delay-1">
+                <h3>First Appearance</h3>
+                <p>Lilo & Stitch (2002)</p>
+            </div>
+            
+            <div class="stat-card animate delay-2">
+                <h3>Live Action</h3>
+                <p>Lilo & Stitch (2025)</p>
+            </div>
+
+            <div class="stat-card animate delay-2">
+                <h3>Creator</h3>
+                <p>Chris Sanders</p>
+            </div>
+            
+            <div class="stat-card animate delay-3">
+                <h3>Species</h3>
+                <p>Experiment 626</p>
+            </div>
+            
+            <div class="stat-card animate delay-4">
+                <h3>Abilities</h3>
+                <p>Super strength, intelligence, wall-climbing, plasma blasts, overall cuteness</p>
+            </div>
+        </div>
+
+        <h2 class="animate delay-1">Why Stitch is My Favorite</h2>
+        <div class="reasons-list">
+            <div class="reason-item animate delay-1">
+                <h3>Characteristics</h3>
+                <p>His physical attributes, blue flur, sharp claws, super strength, intelligence</p>
+            </div>
+            
+            <div class="reason-item animate delay-2">
+                <h3>Hilarious Personality</h3>
+                <p>His mischievous antics and childlike curiosity create countless funny moments while still maintaining his alien nature.</p>
+            </div>
+            
+            <div class="reason-item animate delay-3">
+                <h3>Emotional Depth</h3>
+                <p>Beneath his tough exterior, Stitch has a vulnerable side that makes him deeply relatable and lovable.</p>
+            </div>
+            
+            <div class="reason-item animate delay-4">
+                <h3>Iconic Design</h3>
+                <p>With his blue fur, big ears, and four arms, Stitch has one of the most unique and recognizable character designs in animation.</p>
+            </div>
+        </div>
+
+        <h2 class="animate delay-2">Stitch Gallery</h2>
+        <div class="gallery">
+            <div class="gallery-item animate delay-1">
+                <img src="download (8).jpg" alt="Stitch 1">
+                <div class="gallery-caption">Stitch being Elvis</div>
+            </div>
+            
+            <div class="gallery-item animate delay-2">
+                <img src="Cartoon Lilo and Stitch.jpg" alt="Stitch 2">
+                <div class="gallery-caption">Stitch with Lilo</div>
+            </div>
+            
+            <div class="gallery-item animate delay-3">
+                <img src="Stitch at the Beach.jpg" alt="Stitch 3">
+                <div class="gallery-caption">Stitch eating ice cream</div>
+            </div>
+            
+            <div class="gallery-item animate delay-4">
+                <img src="download (9).jpg" alt="Stitch 4">
+                <div class="gallery-caption">Stitch in alien form</div>
+            </div>
+        </div>
+
+        <h2 class="animate delay-3">Stitch in Action</h2>
+        <div class="video-container animate delay-4">
+            <iframe width="560" height="315" src="Lilo & Stitch - Lilo meets Stitch the first time [FULL SCENE].mp4" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+    </div>
+
+    <footer class="animate delay-4">
+        <p>"This is my family. It's little and broken, but still good." - Stitch</p>
+        <p>&copy; 2023 My Favorite Character - Jane 8C</p>
+    </footer>
+
+    <script>
+        // Dark mode toggle
+        const themeToggle = document.getElementById('themeToggle');
+        const icon = themeToggle.querySelector('i');
+        
+        themeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+            
+            if (document.body.classList.contains('dark-mode')) {
+                icon.classList.replace('fa-moon', 'fa-sun');
+            } else {
+                icon.classList.replace('fa-sun', 'fa-moon');
+            }
+        });
+
+        // Animation on scroll
+        const animateElements = document.querySelectorAll('.animate');
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = 1;
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, { threshold: 0.1 });
+
+        animateElements.forEach(el => {
+            el.style.opacity = 0;
+            el.style.transform = 'translateY(20px)';
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
